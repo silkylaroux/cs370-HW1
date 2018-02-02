@@ -13,8 +13,30 @@ float return_ratio(int *arr, int size)
     /*
      * Insert Your code here
      */
-
+    int primes = 0;
+    for(int x = 0; x < size; x++){
+        if(is_prime(arr[x])==1){
+            primes++;
+        }
+    }
+    float ratio = primes/(size-primes);
+    return ratio;
 }
+
+/*
+ * Takes in an int value and returns 1 if the value is a prime number, 0 if
+ * it is a composite.
+ */
+int is_prime(int num){
+
+    for(int x = 0; x< (num/2); x++){
+        if((num % x) != 0){
+            return 0;
+        }
+    }
+    return 1;
+} 
+
 
 
 /*
@@ -76,7 +98,23 @@ int get_arr_val(int rand)
  */
 float get_running_ratio()
 {
-   /*
-    * Insert Your code here
-    */
+    int random = rand();
+    int iterCount = get_iteration_count(random);
+
+    int average = 0;
+
+    
+    
+    for(int x = 0; x < iterCount; x++){
+       int size = get_arr_size(rand());
+       int *arr = (int*)calloc(size,sizeof(int));
+       for(int y =0; y < size; y++){
+            arr[y] = get_arr_val(rand()); 
+       } 
+       average += return_ratio(arr, size);
+    }
+
+    average = average / iterCount;
+    return average;
 }
+
