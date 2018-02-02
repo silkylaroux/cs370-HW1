@@ -36,7 +36,9 @@ float return_ratio(int *arr, int size)
         }
     }
     float primeFloat = (float)primes;
+    //printf("primes %d\n",primes);
     float sizeFloat = (float)size;
+    //printf("nonprimes %d\n",(size-primes));
     //printf("%f\n",(primeFloat/(sizeFloat-primeFloat)));
     float ratio = (primeFloat/(sizeFloat-primeFloat));
     return ratio;
