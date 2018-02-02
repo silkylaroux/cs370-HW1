@@ -3,17 +3,17 @@
 
 /*
  * Takes in an int value and returns 1 if the value is a prime number, 0 if
- * it is a composite.
+ * it is a composite. Helper method for return_ratio.
  */
 int is_prime(int num){
 
     for(int x = 2; x< (num/2); x++){
         if((num % x) == 0){
-            //printf("not prime?%d\n", num);
+
             return 0;
         }
     }
-    //printf("is prime?%d\n",num);
+
     return 1;
 } 
 
@@ -30,16 +30,16 @@ float return_ratio(int *arr, int size)
     for(int x = 0; x < size; x++){
 
         if(is_prime(arr[x])==1){
-            //printf("%d\n",arr[x]);
-            //printf("%d\n",primes);
             primes++;
         }
     }
+
+    // These are floats so that the division is done correctly, and the
+    // correct ratio is returned.
     float primeFloat = (float)primes;
-    //printf("primes %d\n",primes);
     float sizeFloat = (float)size;
-    //printf("nonprimes %d\n",(size-primes));
-    //printf("%f\n",(primeFloat/(sizeFloat-primeFloat)));
+
+    // ratio is the float with the ratio (primes/nonprimes) from the array
     float ratio = (primeFloat/(sizeFloat-primeFloat));
     return ratio;
 }
@@ -104,28 +104,32 @@ int get_arr_val(int rand)
  */
 float get_running_ratio()
 {
-    int random = rand();
-    int iterCount = get_iteration_count(random);
+    int random = rand(); 
+    int iterCount = get_iteration_count(random); // Gets the amount of iterations
+
+    printf("[Analyze] Number of Iterations: %d\n", iterCount);
 
     float average = 0;
-
-    
     
     for(int x = 0; x < iterCount; x++){
+
        int size = get_arr_size(rand());
-       int *arr = malloc(size*sizeof(int));
+       int *arr = malloc(size*sizeof(int));     // Allocate space for array to hold rand values
+
        for(int y =0; y < size; y++){
+
             arr[y] = get_arr_val(rand()); 
        } 
        
 
        average = average + return_ratio(arr, size);
-       //printf("return rat: %f\n", return_ratio(arr, size));
-       //printf("average: %f\n",average);
-       free(arr);
+
+       free(arr);                               // Free mem for array
     }
+
     float iterCountFloat = (float)iterCount;
-    average = average / iterCountFloat;
+
+    average = average / iterCountFloat;         // Returns the average prime ratio of all the iterations
     return average;
 }
 
