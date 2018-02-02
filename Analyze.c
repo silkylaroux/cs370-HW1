@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+ * Takes in an int value and returns 1 if the value is a prime number, 0 if
+ * it is a composite.
+ */
+int is_prime(int num){
+
+    for(int x = 2; x< (num/2); x++){
+        if((num % x) == 0){
+            //printf("not prime?%d\n", num);
+            return 0;
+        }
+    }
+    //printf("is prime?%d\n",num);
+    return 1;
+} 
 
 /*
  * Takes in an array of integers and the number of elements in the array 
@@ -10,33 +25,22 @@
 
 float return_ratio(int *arr, int size)
 {
-    /*
-     * Insert Your code here
-     */
+    
     int primes = 0;
     for(int x = 0; x < size; x++){
+
         if(is_prime(arr[x])==1){
+            //printf("%d\n",arr[x]);
+            //printf("%d\n",primes);
             primes++;
         }
     }
-    float ratio = primes/(size-primes);
+    float primeFloat = (float)primes;
+    float sizeFloat = (float)size;
+    //printf("%f\n",(primeFloat/(sizeFloat-primeFloat)));
+    float ratio = (primeFloat/(sizeFloat-primeFloat));
     return ratio;
 }
-
-/*
- * Takes in an int value and returns 1 if the value is a prime number, 0 if
- * it is a composite.
- */
-int is_prime(int num){
-
-    for(int x = 0; x< (num/2); x++){
-        if((num % x) != 0){
-            return 0;
-        }
-    }
-    return 1;
-} 
-
 
 
 /*
@@ -101,20 +105,25 @@ float get_running_ratio()
     int random = rand();
     int iterCount = get_iteration_count(random);
 
-    int average = 0;
+    float average = 0;
 
     
     
     for(int x = 0; x < iterCount; x++){
        int size = get_arr_size(rand());
-       int *arr = (int*)calloc(size,sizeof(int));
+       int *arr = malloc(size*sizeof(int));
        for(int y =0; y < size; y++){
             arr[y] = get_arr_val(rand()); 
        } 
-       average += return_ratio(arr, size);
-    }
+       
 
-    average = average / iterCount;
+       average = average + return_ratio(arr, size);
+       //printf("return rat: %f\n", return_ratio(arr, size));
+       //printf("average: %f\n",average);
+       free(arr);
+    }
+    float iterCountFloat = (float)iterCount;
+    average = average / iterCountFloat;
     return average;
 }
 
